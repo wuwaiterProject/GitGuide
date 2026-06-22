@@ -111,6 +111,97 @@ body {
   min-height: 520px;
 }
 
+/* 暫存區面板（git add 練習） */
+.has-staging .svg-container {
+  margin-left: 460px;
+}
+
+.staging-panel {
+  position: absolute;
+  top: 0;
+  left: 250px;
+  bottom: 0;
+  width: 200px;
+  background: #f8fafc;
+  border: 1px dotted #AAA;
+  border-left: none;
+  padding: 8px 10px;
+  font-size: 11px;
+  overflow-y: auto;
+}
+
+.staging-title {
+  font-weight: bold;
+  font-size: 12px;
+  margin-bottom: 8px;
+  color: #1a1a2e;
+}
+
+.staging-section-label {
+  font-size: 10px;
+  font-weight: bold;
+  color: #5c6370;
+  margin: 6px 0 4px;
+  text-transform: uppercase;
+}
+
+.staging-box {
+  min-height: 52px;
+  background: #fff;
+  border: 1px solid #d8dee6;
+  border-radius: 4px;
+  padding: 4px 6px;
+  margin-bottom: 4px;
+}
+
+.file-row {
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-badge {
+  display: inline-block;
+  width: 22px;
+  font-weight: bold;
+}
+
+.file-badge.modified {
+  color: #c2410c;
+}
+
+.file-badge.untracked {
+  color: #6b7280;
+}
+
+.file-badge.staged {
+  color: #15803d;
+}
+
+.file-empty {
+  color: #9ca3af;
+  font-size: 10px;
+  font-style: italic;
+  padding: 4px 2px;
+}
+
+.staging-hint {
+  margin-top: 8px;
+  font-size: 9px;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+.staging-hint code {
+  background: #e8ecf0;
+  padding: 0 3px;
+  border-radius: 2px;
+  font-size: 9px;
+}
+
 .footer {
   margin-top: 24px;
   color: var(--muted);

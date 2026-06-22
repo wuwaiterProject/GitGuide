@@ -6,6 +6,28 @@ define([], function () {
      * name 固定為 Playground，對應 #ExplainGitPlayground-Container
      */
     return {
+        add: {
+            label: 'Add / Status',
+            name: 'Playground',
+            height: 500,
+            staging: true,
+            baseLine: 0.5,
+            commitData: [
+                { id: 'e137e9b', tags: ['master'] }
+            ],
+            files: [
+                { name: 'readme.md', status: 'modified' },
+                { name: 'app.js', status: 'modified' },
+                { name: 'notes.txt', status: 'untracked' }
+            ],
+            description:
+                '左側面板顯示<strong>工作目錄</strong>與<strong>暫存區</strong>。<br>' +
+                '<span class="cmd">git add [檔名]</span> / <span class="cmd">git add .</span> 將變更加入暫存區。<br>' +
+                '<span class="cmd">git status</span> 查看 staged 與否。<br>' +
+                '<span class="cmd">git commit</span> 只會提交已 staged 的檔案。<br>' +
+                '模擬改檔: <span class="cmd">edit readme.md</span> · 新檔案: <span class="cmd">touch new.txt</span>',
+            initialMessage: '試試 git status → git add readme.md → git status → git commit'
+        },
         commit: {
             label: 'Commit',
             name: 'Playground',
@@ -15,8 +37,8 @@ define([], function () {
                 { id: 'e137e9b', tags: ['master'] }
             ],
             description:
-                '本練習場不涵蓋 git add / 暫存區，請假設檔案都已 staged。<br>' +
-                '在下方終端機輸入 <span class="cmd">git commit</span>，觀察 commit 節點如何產生。',
+                '專注練習 commit 節點。若要練習 staged，請選 <strong>Add / Status</strong> 模式。<br>' +
+                '在下方輸入 <span class="cmd">git commit</span>，觀察 commit 節點如何產生。',
             initialMessage: '試著輸入幾次 git commit，觀察圖形變化。'
         },
         branch: {
@@ -194,6 +216,7 @@ define([], function () {
             label: '自由模式',
             name: 'Playground',
             height: 500,
+            staging: true,
             commitData: [
                 { id: 'e137e9b', tags: ['origin/master', 'master'] }
             ],
@@ -203,10 +226,15 @@ define([], function () {
                 { id: '090e2b8', parent: '7eb7654' },
                 { id: 'ee5df4b', parent: '090e2b8', tags: ['master'] }
             ],
+            files: [
+                { name: 'readme.md', status: 'modified' },
+                { name: 'main.js', status: 'untracked' }
+            ],
             description:
-                '自由操作所有支援的指令：commit、branch、checkout、merge、rebase、reset、revert、fetch、pull、push 等。<br>' +
+                '自由操作所有支援的指令，含 <span class="cmd">git add</span>、<span class="cmd">git status</span>。<br>' +
+                '左側面板可觀察檔案是否 staged。模擬改檔: <span class="cmd">edit [檔名]</span> · <span class="cmd">touch [檔名]</span><br>' +
                 '建議搭配 <a href="../index.html">GitGuide 目錄</a> 一起練習。',
-            initialMessage: '自由練習，想打什麼就打什麼。'
+            initialMessage: '自由練習。可先 git status 看看檔案狀態。'
         }
     };
 });

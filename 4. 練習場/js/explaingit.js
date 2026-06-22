@@ -1,4 +1,4 @@
-define(['historyview', 'controlbox', 'd3'], function (HistoryView, ControlBox, d3) {
+define(['historyview', 'controlbox', 'stagingview', 'd3'], function (HistoryView, ControlBox, StagingView, d3) {
     var prefix = 'ExplainGit',
         openSandBoxes = [],
         open,
@@ -12,9 +12,14 @@ define(['historyview', 'controlbox', 'd3'], function (HistoryView, ControlBox, d
             container = d3.select('#' + containerId),
             playground = container.select('.playground-container'),
             historyView, originView = null,
+            stagingView = null,
             controlBox;
 
         container.style('display', 'block');
+
+        if (args.staging || args.files) {
+            container.classed('has-staging', true);
+        }
 
         args.name = name;
         historyView = new HistoryView(args);
@@ -32,9 +37,15 @@ define(['historyview', 'controlbox', 'd3'], function (HistoryView, ControlBox, d
             originView.render(playground);
         }
 
+        if (args.staging || args.files) {
+            stagingView = new StagingView({ files: args.files || [] });
+            stagingView.render(playground);
+        }
+
         controlBox = new ControlBox({
             historyView: historyView,
             originView: originView,
+            stagingView: stagingView,
             initialMessage: args.initialMessage
         });
 
@@ -44,6 +55,7 @@ define(['historyview', 'controlbox', 'd3'], function (HistoryView, ControlBox, d
         openSandBoxes.push({
             hv: historyView,
             cb: controlBox,
+            sv: stagingView,
             container: container
         });
     };
@@ -53,6 +65,10 @@ define(['historyview', 'controlbox', 'd3'], function (HistoryView, ControlBox, d
             var osb = openSandBoxes[i];
             osb.hv.destroy();
             osb.cb.destroy();
+            if (osb.sv) {
+                osb.sv.destroy();
+            }
+            osb.container.classed('has-staging', false);
             osb.container.style('display', 'none');
         }
 
@@ -63,6 +79,7 @@ define(['historyview', 'controlbox', 'd3'], function (HistoryView, ControlBox, d
     explainGit = {
         HistoryView: HistoryView,
         ControlBox: ControlBox,
+        StagingView: StagingView,
         generateId: HistoryView.generateId,
         open: open,
         reset: reset

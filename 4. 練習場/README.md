@@ -22,8 +22,7 @@ python -m http.server 8080
 
 ## 練習項目
 
-與 [高見龍 Git 練習場](https://gitbook.tw/playground#freeplay) 類似：
-
+- **Add / Status** — `git add`、`git status`、暫存區視覺化（建議從這裡開始）
 - Commit、Branch、Checkout、Merge、Rebase
 - Reset、Revert、Delete Branches
 - Fetch、Pull、Push
@@ -33,7 +32,8 @@ python -m http.server 8080
 
 - 核心引擎：[explain-git-with-d3](https://github.com/onlywei/explain-git-with-d3)（MIT）
 - 視覺化：D3.js v3
-- 本練習場**不模擬** `git add` / 暫存區，預設檔案皆已 staged
+- 本練習場**Add / Status 與自由模式**支援 `git add` / `git status` 與暫存區面板
+- 其他模式預設檔案已 staged，專注練習 branch / merge 等
 
 ## 授權
 

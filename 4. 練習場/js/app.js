@@ -3,7 +3,7 @@ require(['explaingit', 'examples'], function (explainGit, examples) {
 
     var select = document.getElementById('mode-select');
     var description = document.getElementById('mode-description');
-    var defaultHash = 'freeplay';
+    var defaultHash = 'add';
 
     function setDescription(example) {
         if (!example || !example.description) {

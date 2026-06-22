@@ -8,6 +8,7 @@ define(['d3'], function () {
     function ControlBox(config) {
         this.historyView = config.historyView;
         this.originView = config.originView;
+        this.stagingView = config.stagingView || null;
         this.initialMessage = config.initialMessage || '在下方輸入 git 指令。';
         this._commandHistory = [];
         this._currentCommand = -1;
@@ -105,13 +106,31 @@ define(['d3'], function () {
                 return;
             }
 
-            var split = entry.split(' ');
+            var split = entry.trim().split(/\s+/);
 
             this.log.append('div')
                 .classed('command-entry', true)
                 .html(entry);
 
             this._scrollToBottom();
+
+            if (split[0] === 'edit' || split[0] === 'touch') {
+                try {
+                    if (!this.stagingView) {
+                        return this.error('此模式不支援 edit/touch。請選擇 Add 或自由模式。');
+                    }
+                    if (split[0] === 'edit') {
+                        this.stagingView.edit(split.slice(1).join(' '));
+                        this.info('已修改: ' + split.slice(1).join(' '));
+                    } else {
+                        this.stagingView.touch(split.slice(1).join(' '));
+                        this.info('已建立未追蹤檔案: ' + split.slice(1).join(' '));
+                    }
+                } catch (ex) {
+                    this.error(ex.message);
+                }
+                return;
+            }
 
             if (split[0] !== 'git') {
                 return this.error();
@@ -144,13 +163,22 @@ define(['d3'], function () {
         },
 
         commit: function (args) {
+            var message, stagedNames;
+
+            if (this.stagingView) {
+                if (!this.stagingView.hasStaged()) {
+                    throw new Error('沒有 staged 的檔案。請先 git add，再用 git status 確認。');
+                }
+                stagedNames = this.stagingView.getStagedNames();
+            }
+
             if (args.length >= 2) {
                 var arg = args.shift();
 
                 switch (arg) {
                     case '-m':
-                        var message = args.join(" ");
-                        this.historyView.commit({},message);
+                        message = args.join(' ');
+                        this.historyView.commit({}, message);
                         break;
                     default:
                         this.historyView.commit();
@@ -159,6 +187,40 @@ define(['d3'], function () {
             } else {
                 this.historyView.commit();
             }
+
+            if (this.stagingView) {
+                this.info('已提交: ' + stagedNames.join(', '));
+                this.stagingView.afterCommit();
+            }
+        },
+
+        add: function (args) {
+            if (!this.stagingView) {
+                this.info('此練習模式未啟用暫存區，請切換到 Add 或自由模式。');
+                return;
+            }
+
+            if (args.length === 0) {
+                throw new Error('請指定檔名，或使用 git add .');
+            }
+
+            if (args.length === 1 && args[0] === '.') {
+                var count = this.stagingView.addAll();
+                this.info('已將 ' + count + ' 個檔案加入暫存區。');
+                return;
+            }
+
+            var name = args.join(' ');
+            this.stagingView.add(name);
+            this.info('已 staged: ' + name);
+        },
+
+        status: function () {
+            if (!this.stagingView) {
+                this.info('此練習模式未啟用暫存區。');
+                return;
+            }
+            this.info(this.stagingView.getStatusText());
         },
 
         branch: function (args) {
@@ -258,6 +320,19 @@ define(['d3'], function () {
                 var arg = args.shift();
 
                 switch (arg) {
+                case 'HEAD':
+                    if (this.stagingView && args.length > 0) {
+                        var fileName = args.join(' ');
+                        this.stagingView.unstage(fileName);
+                        this.info('已取消 staged: ' + fileName);
+                        args.length = 0;
+                        break;
+                    }
+                    var headArgs = ['HEAD'].concat(args);
+                    args.length = 0;
+                    this.info('Assuming "--hard".');
+                    this.historyView.reset(headArgs.join(' '));
+                    break;
                 case '--soft':
                     this.info(
                         'The "--soft" flag works in real git, but ' +
