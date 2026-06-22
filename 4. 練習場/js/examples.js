@@ -205,7 +205,7 @@ define([], function () {
             ],
             description:
                 '自由操作所有支援的指令：commit、branch、checkout、merge、rebase、reset、revert、fetch、pull、push 等。<br>' +
-                '建議搭配 <a href="../Index.md">GitGuide 觀念章節</a> 一起練習。',
+                '建議搭配 <a href="../index.html">GitGuide 目錄</a> 一起練習。',
             initialMessage: '自由練習，想打什麼就打什麼。'
         }
     };

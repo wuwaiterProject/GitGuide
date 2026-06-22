@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitGuide — 閱讀</title>
+  <link rel="stylesheet" href="assets/site.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <div class="page">
+    <nav class="reader-nav">
+      <a href="index.html">← 回到目錄</a>
+    </nav>
+    <article id="content" class="markdown-body">載入中…</article>
+  </div>
+  <script>
+    mermaid.initialize({ startOnLoad: false, theme: 'neutral' });
+
+    const params = new URLSearchParams(location.search);
+    const path = params.get('p');
+
+    if (!path) {
+      document.getElementById('content').innerHTML =
+        '<p class="error">未指定文章路徑。請從 <a href="index.html">首頁</a> 選擇章節。</p>';
+    } else {
+      document.title = 'GitGuide — ' + decodeURIComponent(path.split('/').pop());
+      fetch(path)
+        .then(function (res) {
+          if (!res.ok) throw new Error('找不到檔案: ' + path);
+          return res.text();
+        })
+        .then(function (md) {
+          const html = marked.parse(md, { gfm: true, breaks: true });
+          const el = document.getElementById('content');
+          el.innerHTML = html;
+
+          el.querySelectorAll('pre > code.language-mermaid').forEach(function (node) {
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = node.textContent;
+            node.parentElement.replaceWith(div);
+          });
+
+          return mermaid.run({ nodes: el.querySelectorAll('.mermaid') });
+        })
+        .catch(function (err) {
+          document.getElementById('content').innerHTML =
+            '<p class="error">' + err.message + '</p>';
+        });
+    }
+  </script>
+</body>
+</html>
