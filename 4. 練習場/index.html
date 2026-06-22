@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Git 練習場 — GitGuide</title>
+  <script data-main="js/main" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.4/require.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+  <link rel="stylesheet" href="css/explaingit.css" />
+  <link rel="stylesheet" href="css/playground.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <h1>Git 練習場</h1>
+      <p class="subtitle">
+        透過視覺化互動，理解 Git 指令執行後會發生什麼事。
+        本工具基於 <a href="https://github.com/onlywei/explain-git-with-d3" target="_blank" rel="noopener">explain-git-with-d3</a>（MIT），
+        靈感來自 <a href="https://gitbook.tw/playground#freeplay" target="_blank" rel="noopener">高見龍 Git 練習場</a>。
+      </p>
+    </header>
+
+    <section class="toolbar">
+      <label for="mode-select">練習項目：</label>
+      <select id="mode-select">
+        <option value="">請選擇</option>
+      </select>
+      <a class="zen-link" href="#freeplay">自由模式</a>
+    </section>
+
+    <section id="mode-description" class="description"></section>
+
+    <section class="playground-area">
+      <div id="ExplainGitPlayground-Container" class="concept-container active">
+        <div class="playground-container"></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>
+        本練習場不涵蓋 <code>git add</code> / 暫存區，請假設檔案都已 staged。
+        觀念說明見 <a href="../2. 觀念/2.1 三大區域.md">2.1 三大區域</a>、
+        <a href="../1. 基礎/1.2 Instruction.md">1.2 Instruction</a>。
+      </p>
+      <p class="credit">Credit: <a href="https://github.com/onlywei/explain-git-with-d3" target="_blank" rel="noopener">explain-git-with-d3</a></p>
+    </footer>
+  </div>
+</body>
+</html>

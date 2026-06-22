@@ -1,0 +1,131 @@
+/* GitGuide 練習場 — 版面與繁中樣式 */
+
+:root {
+  --bg: #f4f6f8;
+  --card: #ffffff;
+  --text: #1a1a2e;
+  --muted: #5c6370;
+  --accent: #2563eb;
+  --border: #d8dee6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", "Microsoft JhengHei", "PingFang TC", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+  min-height: 100%;
+}
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+}
+
+.header h1 {
+  margin: 0 0 8px;
+  font-size: 1.75rem;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.subtitle a {
+  color: var(--accent);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 24px 0 12px;
+  padding: 14px 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.toolbar label {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+#mode-select {
+  min-width: 200px;
+  padding: 8px 12px;
+  font-size: 0.95rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+}
+
+.zen-link {
+  margin-left: auto;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.zen-link:hover {
+  text-decoration: underline;
+}
+
+.description {
+  min-height: 48px;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  background: #eef2ff;
+  border-left: 4px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  line-height: 1.65;
+  font-size: 0.92rem;
+}
+
+.description a {
+  color: var(--accent);
+}
+
+.playground-area {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px;
+  overflow: hidden;
+}
+
+#ExplainGitPlayground-Container.active {
+  display: block !important;
+}
+
+#ExplainGitPlayground-Container .playground-container {
+  min-height: 520px;
+}
+
+.footer {
+  margin-top: 24px;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.footer code {
+  background: #e8ecf0;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+
+.credit {
+  margin-top: 8px;
+  font-size: 0.8rem;
+}
