@@ -7,14 +7,14 @@
 直接用瀏覽器開啟 `index.html`：
 
 ```
-4. 練習場/index.html
+4. Practice/index.html
 ```
 
 或在本目錄啟動簡易伺服器（部分瀏覽器對 `file://` 載入模組較嚴格，建議用本機伺服器）：
 
 ```bash
 # Python
-cd "4. 練習場"
+cd "4. Practice"
 python -m http.server 8080
 
 # 然後開啟 http://localhost:8080/
